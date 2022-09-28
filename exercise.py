@@ -17,11 +17,11 @@ while (unit != "l" or unit != "k"):
     unit = input("Do you want to know the weight in kg 'k' or lb 'l'?")
     if unit == "l":
         result = (int(apple_amount) * apple_g) * lb
-        print(f"{apple_amount} apples weight {result}")
+        print(f"{apple_amount} apples weight {result} lb")
         break
     elif unit == "k":
-        result = (int(apple_amount) * apple_g)
-        print(f"{apple_amount} apples weight {result}")
+        result = (int(apple_amount) * apple_g / 1000)
+        print(f"{apple_amount} apples weight {result} kg")
         break
     else:
         print("Please enter 'k' or 'l'")
