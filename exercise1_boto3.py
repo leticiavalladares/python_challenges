@@ -1,5 +1,6 @@
 import boto3
 import json
+from rich import print
 
 ## Exercise
 
@@ -14,45 +15,48 @@ client = boto3.client('ec2')
 response_vpc = client.describe_vpcs()
 response_subnet = client.describe_subnets()
 
-print("\nN° of vpcs: " + str(len(response_vpc["Vpcs"])))
+vpc_qty = len(response_vpc['Vpcs'])
+vpc_name = response_vpc['Vpcs'][0]['Tags'][0]['Value']
+subnet_qty = len(response_subnet['Subnets'])
+
+print(f"\nN° of vpcs: {vpc_qty}")
 print("--------------------------------------------------------------")
-print("Name of vpc: " + str(response_vpc["Vpcs"][0]["Tags"][0]["Value"]))
+print(f"Name of vpc: {vpc_name}")
 print("--------------------------------------------------------------")
 print("VPCs attributes: ")
-print(json.dumps(response_vpc["Vpcs"], sort_keys=True, indent=4))
+print(json.dumps(response_vpc['Vpcs'], sort_keys=True, indent=4))
 print("============================================================\n")
-print("N° of subnets: " + str(len(response_subnet["Subnets"])))
-print("-------------------------------------------------------------")
-print("")
+print(f"N° of subnets: {subnet_qty}")
+print("-------------------------------------------------------------\n")
 
-subnets = response_subnet["Subnets"]
+subnets = response_subnet['Subnets']
 i = 0
 for subnet in subnets:
     for tag in subnet['Tags']:
         if tag['Key'] == 'Name':
             i += 1
-            print(str(i) + ". " + str(tag['Value']) + ", id: " + str(subnet['SubnetId']))
+
+            print(f"{i}. {tag['Value']}, id: {subnet['SubnetId']}")
 
 
 print("============================================================\n")
 
 i = 0
-test_vpc = str(True if response_vpc["Vpcs"][0]["Tags"][0]["Key"] == 'Project' and response_vpc["Vpcs"][0]["Tags"][0]["Value"] == 'Talent-Academy' else False)
+test_vpc = True if response_vpc['Vpcs'][0]['Tags'][0]['Key'] == 'Project' and response_vpc['Vpcs'][0]['Tags'][0]['Value'] == 'Talent-Academy' else False
 
 print("Does the tag Project: Talent-Academy exist in every resource?")
 
 print("-------------------------------------------------------------")
 
-test_vpc = str(True if response_vpc["Vpcs"][0]["Tags"][0]["Key"] == 'Project' and response_vpc["Vpcs"][0]["Tags"][0]["Value"] == 'Talent-Academy' else False)
-
-print("VPC   " + str(response_vpc["Vpcs"][0]["VpcId"]) + ": " + test_vpc )
+print(f"VPC   {response_vpc['Vpcs'][0]['VpcId']}: {test_vpc}" )
 for subnet in subnets:
     for tag in subnet['Tags']:
-        test = str(True if tag['Key'] == 'Project' and tag['Value'] == 'Talent-Academy' else False)
+        test = True if tag['Key'] == 'Project' and tag['Value'] == 'Talent-Academy' else False
         if tag['Key'] == 'Project':
             i += 1
-            print(str(i) + ". " + str(subnet['SubnetId']) + ": " + test)
+            print(f"{i}. {subnet['SubnetId']}: {test}")
 
+print("-------------------------------------------------------------")
 
 """ response_tag = client.create_tags(
     Resources = [
