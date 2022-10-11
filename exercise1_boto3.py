@@ -29,6 +29,7 @@ print("============================================================\n")
 print(f"N° of subnets: {subnet_qty}")
 print("-------------------------------------------------------------\n")
 
+
 subnets = response_subnet['Subnets']
 i = 0
 for subnet in subnets:
@@ -57,6 +58,7 @@ for subnet in subnets:
             print(f"{i}. {subnet['SubnetId']}: {test}")
 
 print("-------------------------------------------------------------")
+
 
 """ response_tag = client.create_tags(
     Resources = [
