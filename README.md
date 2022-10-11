@@ -1,7 +1,5 @@
 # Python challenges
 
-### Status
-
 [![CodeQL](https://github.com/leticiavalladares/python_challenges/actions/workflows/codeql.yml/badge.svg)](https://github.com/leticiavalladares/python_challenges/actions/workflows/codeql.yml)
 
 ### Exercise 1: Unit conversion in lb or kg
